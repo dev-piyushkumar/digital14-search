@@ -12,4 +12,4 @@ This project is using architecture similar to Model–view–viewmodel (MVVM) wi
 
 - App has been tested in Mobile (android and iOS simulator) and macos. Try to run through vscode or else use ```flutter run lib/main.dart``` command to run from terminal (find more details on command [here](https://docs.flutter.dev/reference/flutter-cli)).
 
-- Also you can find a dmg file for macos in the tag section. You can find more details on creating dmg for macos [here](https://retroportalstudio.medium.com/creating-dmg-file-for-flutter-macos-apps-e448ff1cb0f).
+- Also you can find a dmg file for macos in the release section [v1.0.0](https://github.com/dev-piyushkumar/digital14_search/releases/tag/v1.0.0). You can find more details on creating dmg for macos [here](https://retroportalstudio.medium.com/creating-dmg-file-for-flutter-macos-apps-e448ff1cb0f).
