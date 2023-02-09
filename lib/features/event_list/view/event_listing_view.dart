@@ -15,8 +15,9 @@ class EventListingView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Widget contentWidget;
     if ((rxController.eventView.value?.items.length ?? 0) > 0) {
-      return LayoutBuilder(builder: (context, constraints) {
+      contentWidget = LayoutBuilder(builder: (context, constraints) {
         return ListView.builder(
           scrollDirection: Axis.vertical,
           itemCount: rxController.eventView.value?.items.length ?? 0,
@@ -30,7 +31,38 @@ class EventListingView extends StatelessWidget {
               needRouting),
         );
       });
+    } else {
+      contentWidget = const SizedBox.shrink();
     }
-    return const SizedBox.shrink();
+    return Stack(
+      children: [
+        /// Content Widget
+        Positioned(
+          left: 0,
+          right: 0,
+          top: 0,
+          bottom: 0,
+          child: contentWidget,
+        ),
+
+        /// Progress Loader
+        if (rxController.eventView.value?.callingApi ?? false)
+          Positioned(
+            left: 0,
+            right: 0,
+            top: 0,
+            bottom: 0,
+            child: Container(
+              color: Colors.white.withOpacity(0.5),
+              alignment: Alignment.center,
+              child: CircularProgressIndicator(
+                value: null,
+                strokeWidth: 7.0,
+                color: themeSwatch.shade400,
+              ),
+            ),
+          ),
+      ],
+    );
   }
 }

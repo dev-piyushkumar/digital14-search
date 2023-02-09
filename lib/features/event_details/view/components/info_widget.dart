@@ -29,6 +29,7 @@ Widget getInfoWidget(BuildContext context, EventItemViewModel? viewModel,
             fontWeight: FontWeight.w300,
           ),
         ),
+        const SizedBox(height: 16),
       ],
     ),
   );

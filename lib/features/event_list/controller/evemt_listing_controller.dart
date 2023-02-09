@@ -34,24 +34,29 @@ class EventListingController extends RxController {
     if (newValue.isNotEmpty)
       await Future.delayed(const Duration(milliseconds: 300));
     if (_query != newValue) return;
+    eventView
+        .add((eventView.value ?? defaultViewModel).copyWith(callingApi: true));
 
     final ResponseModel<Map<String, dynamic>, EventResult> responseModel =
         await restService.get<Map<String, dynamic>, EventResult>(
       url: evnentSearchUrl(),
       defaultValue: const EventResult(),
       queryParameters: <String, String>{
-        // 'client_id': 'MzE4MTY0NzR8MTY3NTgwMDg5MS40MjY5MTM1',
         'q': _query,
       },
     );
+    if (_query != newValue) return;
 
-    if (responseModel.errorState == ErrorState.noError && _query == newValue) {
+    if (responseModel.errorState == ErrorState.noError) {
       for (final EventItem e in responseModel.data.events ?? <EventItem>[]) {
         _newValues.add(EventItemViewModel(eventItem: e));
       }
 
+      eventView.add((eventView.value ?? defaultViewModel)
+          .copyWith(items: _newValues, callingApi: false));
+    } else {
       eventView.add(
-          (eventView.value ?? defaultViewModel).copyWith(items: _newValues));
+          (eventView.value ?? defaultViewModel).copyWith(callingApi: false));
     }
   }
 }
