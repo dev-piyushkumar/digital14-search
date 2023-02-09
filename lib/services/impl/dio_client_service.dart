@@ -12,14 +12,16 @@ class DioClientService extends BaseService {
 
   @override
   Future<void> init() async {
-    (_dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
-        (HttpClient client) {
-      client.badCertificateCallback =
-          (X509Certificate cert, String host, int port) {
-        return true;
+    if (_dio.httpClientAdapter is DefaultHttpClientAdapter) {
+      (_dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
+          (HttpClient client) {
+        client.badCertificateCallback =
+            (X509Certificate cert, String host, int port) {
+          return true;
+        };
+        return client;
       };
-      return client;
-    };
+    }
   }
 
   Dio client({
